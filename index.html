@@ -1,81 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Should I Tip?</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      color: #333;
-      max-width: 480px;
-      margin: 40px auto;
-      padding: 20px;
-      text-align: center;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      font-size: 1.8em;
-      margin-bottom: 0.3em;
-    }
-
-    select, button {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
-
-    button {
-      background-color: #007aff;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-
-    button:hover {
-      background-color: #005fcb;
-    }
-
-    #result {
-      background: white;
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      min-height: 60px;
-    }
-
-    footer {
-      margin-top: 30px;
-      font-size: 0.85em;
-      color: #777;
-    }
+    body { font-family: Inter, Arial, sans-serif; background:#f6f8fb; color:#222; max-width:640px; margin:36px auto; padding:22px; text-align:center; border-radius:12px; box-shadow:0 8px 30px rgba(20,20,40,0.06);}
+    h1 { margin:0 0 6px; font-size:1.6rem; }
+    p { margin:0 0 14px; color:#555; }
+    select, button { width:92%; padding:10px 12px; margin:8px 0; border-radius:8px; border:1px solid #d8dbe0; font-size:1rem; }
+    button { background:#007aff; color:#fff; border:none; cursor:pointer; }
+    button:hover { filter:brightness(.95); }
+    #result { background:#fff; padding:14px; margin-top:16px; border-radius:10px; border:1px solid #e6e9ef; min-height:64px; text-align:left; }
+    footer { margin-top:18px; font-size:.85rem; color:#777; }
+    label{display:block; text-align:left; margin-left:4%; font-weight:600; color:#333;}
   </style>
 </head>
 <body>
   <h1>💰 Should I Tip?</h1>
-  <p>Select a country and service type to learn local tipping etiquette.</p>
+  <p>Select a country/territory and service type to see a short tipping summary.</p>
 
+  <label for="country">Country / Territory</label>
   <select id="country">
-    <option value="">-- Select Country --</option>
-    <option>USA</option>
-    <option>Japan</option>
-    <option>France</option>
-    <option>UK</option>
-    <option>Mexico</option>
-    <option>Australia</option>
-    <option>Italy</option>
-    <option>Brazil</option>
-    <option>India</option>
-    <option>South Africa</option>
+    <option value="">Loading countries...</option>
   </select>
 
+  <label for="service">Service type</label>
   <select id="service">
     <option value="">-- Select Service Type --</option>
     <option value="restaurant">Restaurant</option>
@@ -84,14 +34,42 @@
     <option value="bar">Bar</option>
   </select>
 
-  <button onclick="showTipInfo()">Show Tipping Info</button>
+  <button id="showBtn">Show Tipping Info</button>
 
-  <div id="result">Select options above to get tipping info.</div>
+  <div id="result">Select a country and a service type, then click "Show Tipping Info".</div>
 
-  <footer>
-    © 2025 Should I Tip? | Made with ❤️ by You
-  </footer>
+  <footer>© Should I Tip? — Data: short summaries. You can edit tips.js to refine any country.</footer>
 
   <script src="tips.js"></script>
+  <script>
+    // populate dropdown when tips.js loads
+    (function waitForData(){
+      if (typeof countriesList === 'undefined') {
+        setTimeout(waitForData, 50);
+        return;
+      }
+      const sel = document.getElementById('country');
+      sel.innerHTML = '<option value="">-- Select Country / Territory --</option>';
+      countriesList.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.innerText = c;
+        sel.appendChild(opt);
+      });
+    })();
+
+    document.getElementById('showBtn').addEventListener('click', () => {
+      if (typeof showTipInfo !== 'function') {
+        document.getElementById('result').innerText = 'Data still loading — try again in a moment.';
+        return;
+      }
+      showTipInfo();
+    });
+
+    // allow pressing Enter to trigger show
+    document.getElementById('service').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('showBtn').click();
+    });
+  </script>
 </body>
 </html>
