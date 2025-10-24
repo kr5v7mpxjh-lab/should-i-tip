@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Should I Tip?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      color: #333;
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 0.3em;
+    }
+
+    select, button {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #007aff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #005fcb;
+    }
+
+    #result {
+      background: white;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      min-height: 60px;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.85em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>💰 Should I Tip?</h1>
+  <p>Select a country and service type to learn local tipping etiquette.</p>
+
+  <select id="country">
+    <option value="">-- Select Country --</option>
+    <option>USA</option>
+    <option>Japan</option>
+    <option>France</option>
+    <option>UK</option>
+    <option>Mexico</option>
+    <option>Australia</option>
+    <option>Italy</option>
+    <option>Brazil</option>
+    <option>India</option>
+    <option>South Africa</option>
+  </select>
+
+  <select id="service">
+    <option value="">-- Select Service Type --</option>
+    <option value="restaurant">Restaurant</option>
+    <option value="taxi">Taxi</option>
+    <option value="hotel">Hotel</option>
+    <option value="bar">Bar</option>
+  </select>
+
+  <button onclick="showTipInfo()">Show Tipping Info</button>
+
+  <div id="result">Select options above to get tipping info.</div>
+
+  <footer>
+    © 2025 Should I Tip? | Made with ❤️ by You
+  </footer>
+
+  <script src="tips.js"></script>
+</body>
+</html>
